@@ -88,12 +88,15 @@ let getConverteredFile = async (ctx, yearAndMonth) => {
   if (fileInfo !== 'save error') {
     let result = null
     try {
+      var start = new Date().getTime() // 开始转码时间
       result = await converterFile(fileInfo.path, fileInfo.name, yearAndMonth)
+      var end = new Date().getTime() // 结束转码时间
       // 拼接url地址
       return {
         status: 1,
         result: {
           Converter: 'ok',
+          ConverterTime: (end - start) + 'ms',
           DownloadPath: SystemConfig.API_server_type + SystemConfig.API_server_host + result
         }
       }
@@ -101,7 +104,8 @@ let getConverteredFile = async (ctx, yearAndMonth) => {
       return {
         status: 503,
         result: {
-          errInfo: '转码错误！ Converter Error.'
+          errInfo: '转码错误！ Converter Error.',
+          errMessage: err
         }
       }
     }
