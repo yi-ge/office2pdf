@@ -8,6 +8,9 @@ let converter = new Converter()
 let saveFile = async (ctx, yearAndMonth) => {
   // 文件将要上传到哪个文件夹下面
   var uploadfolderpath = path.join(__dirname, '../../assets/uploads/' + yearAndMonth)
+  if (!fs.existsSync(uploadfolderpath)) {
+    fs.mkdirSync(uploadfolderpath)
+  }
   var files = ctx.request.body.files
 
   // formidable 会将上传的文件存储为一个临时文件，现在获取这个文件的目录
@@ -123,7 +126,8 @@ export default (ctx) => {
     return
   } else if (ctx.method === 'POST') {
     const now = new Date()
-    const yearAndMonth = now.getFullYear().toString() + (now.getMonth() + 1).toString()
+    const month = (now.getMonth() + 1) < 10 ? '0' + (now.getMonth() + 1).toString() : (now.getMonth() + 1).toString()
+    const yearAndMonth = now.getFullYear().toString() + month
     // ----- 情况2：发送post请求，上传图片 -----
     return getConverteredFile(ctx, yearAndMonth).then((data) => {
       ctx.body = data
