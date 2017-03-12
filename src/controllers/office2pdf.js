@@ -60,7 +60,9 @@ let converterFile = (filepath, yearAndMonth) => {
       if (err) {
         reject(err)
       } else if (results.status === 0) {
-        resolve(results.outputFile)
+        let result = results.outputFile
+        result = result.slice(result.indexOf('/assets'), result.length)
+        resolve(result)
       }
     })
   })
