@@ -4,11 +4,12 @@ let converter = new Converter()
 
 export default (ctx) => {
   converter.generatePdf('test.xlsx', function (err, result) {
+    if (err) {
+      console.log(err)
+    }
     // Process result if no error
     if (result.status === 0) {
       console.log('Output File located at ' + result.outputFile)
-    } else {
-      console.log(err)
     }
   })
   // converter.generateHtml('test.docx', function (err, result) {
