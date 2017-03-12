@@ -8,9 +8,12 @@ let converter = new Converter()
 let saveFile = async (ctx, yearAndMonth) => {
   // 文件将要上传到哪个文件夹下面
   var uploadfolderpath = path.join(__dirname, '../../assets/uploads/' + yearAndMonth)
+
+  // 如果不存在则创建
   if (!fs.existsSync(uploadfolderpath)) {
     fs.mkdirSync(uploadfolderpath)
   }
+
   var files = ctx.request.body.files
 
   // formidable 会将上传的文件存储为一个临时文件，现在获取这个文件的目录
