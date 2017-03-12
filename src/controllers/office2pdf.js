@@ -6,6 +6,7 @@ import { System as SystemConfig } from '../config'
 let converter = new Converter()
 
 let saveFile = async (ctx, yearAndMonth) => {
+  console.time('移动文件耗时：')
   // 文件将要上传到哪个文件夹下面
   var uploadfolderpath = path.join(__dirname, '../../assets/uploads/' + yearAndMonth)
 
@@ -39,9 +40,7 @@ let saveFile = async (ctx, yearAndMonth) => {
 
   // 将临时文件保存为正式的文件
   try {
-    console.time('移动文件耗时：')
     fs.renameSync(tempfilepath, filenewpath)
-    console.timeEnd('移动文件耗时：')
   } catch (err) {
     if (err) {
       // 发生错误
@@ -51,6 +50,7 @@ let saveFile = async (ctx, yearAndMonth) => {
   }
   // 保存成功
   console.log('Uploaded new file: ' + filename)
+  console.timeEnd('移动文件耗时：')
   return {
     path: filenewpath,
     name: filename
