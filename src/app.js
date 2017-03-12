@@ -23,7 +23,7 @@ app
       uploadDir: path.join(__dirname, '../assets/uploads')
     }
   })) // Processing request
-  .use(KoaStatic('files', path.resolve(__dirname, '../files'))) // Static resource
+  .use(KoaStatic('assets', path.resolve(__dirname, '../assets'))) // Static resource
   .use(KoaSession({
     key: SystemConfig.Session_Key
   })) // Set Session

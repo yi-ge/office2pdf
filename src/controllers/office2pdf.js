@@ -60,20 +60,7 @@ let converterFile = (filepath, yearAndMonth) => {
       if (err) {
         reject(err)
       } else if (results.status === 0) {
-        let outputFile = results.outputFile
-        let result = path.resolve(__dirname, '../../files/' + yearAndMonth + outputFile.slice(outputFile.lastIndexOf('/'), outputFile.length))
-        try {
-          console.time('链接文件耗时：')
-          fs.symlink(outputFile, result)
-          console.timeEnd('链接文件耗时：')
-        } catch (err) {
-          if (err) {
-            // 发生错误
-            reject(err)
-          }
-        }
-        result = result.slice(result.indexOf('/files'), result.length)
-        resolve(result)
+        resolve(results.outputFile)
       }
     })
   })
@@ -102,7 +89,7 @@ let getConverteredFile = async (ctx, yearAndMonth) => {
         status: 503,
         result: {
           errInfo: '转码错误！ Converter Error.',
-          errMessage: err
+          errMessage: err || '未知错误'
         }
       }
     }
