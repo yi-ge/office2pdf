@@ -12,5 +12,6 @@ router
   .post('/api/:name', controllers.api.Post)
   .put('/api/:name', controllers.api.Put)
   .del('/api/:name', controllers.api.Delect)
+  .post('/office2pdf/:name', controllers.office2pdf.default)
 
 module.exports = router
