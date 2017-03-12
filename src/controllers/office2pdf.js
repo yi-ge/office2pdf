@@ -1,9 +1,10 @@
+import path from 'path'
 import Converter from 'office-converter'
 
 let converter = new Converter()
 
 export default (ctx) => {
-  converter.generatePdf('test.xlsx', function (err, result) {
+  converter.generatePdf(path.resolve(__dirname, './test.xlsx'), function (err, result) {
     if (err) {
       console.log(err)
     }
