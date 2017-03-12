@@ -51,20 +51,17 @@ let saveFile = async (ctx, yearAndMonth) => {
   // 保存成功
   console.log('Uploaded new file: ' + filename)
   console.timeEnd('移动文件耗时：')
-  return {
-    path: filenewpath,
-    name: filename
-  }
+  return filenewpath
 }
 
-let converterFile = (filepath, filename, yearAndMonth) => {
-  let result = path.resolve(__dirname, '../../files/' + yearAndMonth + '/' + filename)
+let converterFile = (filepath, yearAndMonth) => {
   return new Promise(function (resolve, reject) {
     converter.generatePdf(filepath, function (err, results) {
       if (err) {
         reject(err)
       } else if (results.status === 0) {
         let outputFile = results.outputFile
+        let result = path.resolve(__dirname, '../../files/' + yearAndMonth + outputFile.slice(outputFile.lastIndexOf('/'), outputFile.length))
         try {
           console.time('移动文件耗时：')
           fs.renameSync(outputFile, result)
@@ -83,13 +80,13 @@ let converterFile = (filepath, filename, yearAndMonth) => {
 }
 
 let getConverteredFile = async (ctx, yearAndMonth) => {
-  let fileInfo = await saveFile(ctx, yearAndMonth)
+  let filepath = await saveFile(ctx, yearAndMonth)
 
-  if (fileInfo !== 'save error') {
+  if (filepath !== 'save error') {
     let result = null
     try {
       var start = new Date().getTime() // 开始转码时间
-      result = await converterFile(fileInfo.path, fileInfo.name, yearAndMonth)
+      result = await converterFile(filepath, yearAndMonth)
       var end = new Date().getTime() // 结束转码时间
       // 拼接url地址
       return {
