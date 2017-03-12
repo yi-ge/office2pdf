@@ -11,6 +11,9 @@ let saveFile = async (ctx, yearAndMonth) => {
   var files = ctx.request.body.files
 
   // formidable 会将上传的文件存储为一个临时文件，现在获取这个文件的目录
+  if (typeof files.file.path === 'undefined') {
+    return 'save error'
+  }
   var tempfilepath = files.file.path
   // 获取文件类型
   var type = files.file.type
@@ -36,7 +39,7 @@ let saveFile = async (ctx, yearAndMonth) => {
   } catch (err) {
     if (err) {
       // 发生错误
-      console.log('fs.rename err')
+      console.log('fs.rename err: ', err)
       return 'save error'
     }
   }
@@ -100,7 +103,7 @@ let getConverteredFile = async (ctx, yearAndMonth) => {
     return {
       status: 503,
       result: {
-        errInfo: '文件错误。 File error.'
+        errInfo: '文件上传错误。 File upload error.'
       }
     }
   }
