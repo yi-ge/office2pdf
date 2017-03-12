@@ -63,9 +63,9 @@ let converterFile = (filepath, yearAndMonth) => {
         let outputFile = results.outputFile
         let result = path.resolve(__dirname, '../../files/' + yearAndMonth + outputFile.slice(outputFile.lastIndexOf('/'), outputFile.length))
         try {
-          console.time('移动文件耗时：')
-          fs.renameSync(outputFile, result)
-          console.timeEnd('移动文件耗时：')
+          console.time('链接文件耗时：')
+          fs.symlink(outputFile, result)
+          console.timeEnd('链接文件耗时：')
         } catch (err) {
           if (err) {
             // 发生错误
