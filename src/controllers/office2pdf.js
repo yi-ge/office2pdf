@@ -1,4 +1,6 @@
-import converter from 'office-converter'
+import Converter from 'office-converter'
+
+let converter = new Converter()
 
 export default (ctx) => {
   converter.generatePdf('test.xlsx', function (err, result) {
