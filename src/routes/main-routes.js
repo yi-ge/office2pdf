@@ -8,10 +8,6 @@ router
     ctx.body = '禁止访问！'
   }) // HOME 路由
   .all('/upload', controllers.upload.default)
-  .get('/api/:name', controllers.api.Get)
-  .post('/api/:name', controllers.api.Post)
-  .put('/api/:name', controllers.api.Put)
-  .del('/api/:name', controllers.api.Delect)
-  .post('/office2pdf/:name', controllers.office2pdf.default)
+  .post('/office2pdf', controllers.office2pdf.default)
 
 module.exports = router
