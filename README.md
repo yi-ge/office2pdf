@@ -1,3 +1,5 @@
+这是一个可以运行于linux的Office2PDF程序，采用《Koa2 RESTful API 服务器脚手架》。主要依赖于https://github.com/dagwieers/unoconv  
+
 Koa2 RESTful API 服务器脚手架
 =============================
 
